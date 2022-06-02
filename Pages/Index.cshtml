@@ -1,0 +1,55 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<form method="post">
+    <div class="col form-group">
+        <div>
+            <label asp-for="Item.Name" class="col-form-label"></label>
+            <input asp-for="Item.Name" class="form-control" />
+            <span asp-validation-for="Item.Name" class="text-danger fw-bold"></span>
+        </div>
+        <div>
+            <label asp-for="Item.Address" class="col-form-label"></label>
+            <input asp-for="Item.Address" class="form-control" />
+            <span asp-validation-for="Item.Address" class="text-danger fw-bold"></span>
+        </div>
+        <div>
+            <label asp-for="Item.Description" class="col-form-label"></label>
+            <textarea asp-for="Item.Description" class="form-control"></textarea>
+            <span asp-validation-for="Item.Description" class="text-danger fw-bold"></span>
+        </div>
+        <div>
+            <label asp-for="Item.Categories" class="col-form-label"></label>
+            <select asp-for="SelectedCategories" asp-items="Model.Options" class="mySelect2 js-example-basic-multiple js-states form-control" style="width: 100%"></select>
+            <span asp-validation-for="SelectedCategories" class="text-danger fw-bold"></span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Zatwierdź</button>
+
+    <div>
+        @Model.result
+    </div>
+
+</form>
+
+
+<script>
+    $(document).ready(function (){
+        $('.mySelect2').select2();
+    });   
+</script>
+<style>
+    .form-group > * {
+        margin-bottom: 1rem;
+    }
+
+    .list {
+        font-size: 1.1em
+    }
+</style>
