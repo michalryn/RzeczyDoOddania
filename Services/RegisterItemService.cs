@@ -19,8 +19,7 @@ namespace RzeczyDoOddania.Services
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
-
-
+            _itemRepo.AddItem(item);
         }
 
         public IList<Category> GetCategories()
@@ -28,13 +27,22 @@ namespace RzeczyDoOddania.Services
             return _categoryRepo.GetAll().ToList();
         }
 
+        public async Task<Category> GetCategory(int id)
+        {
+            return await _categoryRepo.GetCategory(id);
+        }
+
         public List<SelectListItem> GetOptions()
         {
-            return _categoryRepo.GetAll().Select(c => new SelectListItem
+            var options = _categoryRepo.GetAll().Select(c => new SelectListItem
             {
                 Value = c.Id.ToString(),
                 Text = c.Name
             }).ToList();
+
+            options.Insert(0, new SelectListItem());
+
+            return options;
         }
     }
 }

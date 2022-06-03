@@ -25,23 +25,22 @@
             <span asp-validation-for="Item.Description" class="text-danger fw-bold"></span>
         </div>
         <div>
-            <label asp-for="Item.Categories" class="col-form-label"></label>
-            <select asp-for="SelectedCategories" asp-items="Model.Options" class="mySelect2 js-example-basic-multiple js-states form-control" style="width: 100%"></select>
-            <span asp-validation-for="SelectedCategories" class="text-danger fw-bold"></span>
+            <label asp-for="Item.Category" class="col-form-label"></label>
+            <select asp-for="SelectedCategorie" asp-items="Model.Options" class="mySelect2 js-example-placeholder-single js-states form-control" style="width: 100%"></select>
+            <span asp-validation-for="SelectedCategorie" class="text-danger fw-bold"></span>
         </div>
     </div>
     <button type="submit" class="btn btn-primary">Zatwierdź</button>
-
-    <div>
-        @Model.result
-    </div>
 
 </form>
 
 
 <script>
     $(document).ready(function (){
-        $('.mySelect2').select2();
+        $('.mySelect2').select2({
+            placeholder: "Wybierz kategorię",
+            allowClear: true,
+        });
     });   
 </script>
 <style>

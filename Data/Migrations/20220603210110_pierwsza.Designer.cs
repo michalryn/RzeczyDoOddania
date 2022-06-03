@@ -12,8 +12,8 @@ using RzeczyDoOddania.Data;
 namespace RzeczyDoOddania.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220531202407_FirstModels")]
-    partial class FirstModels
+    [Migration("20220603210110_pierwsza")]
+    partial class pierwsza
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace RzeczyDoOddania.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CategoryItem", b =>
-                {
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoriesId", "ItemsId");
-
-                    b.HasIndex("ItemsId");
-
-                    b.ToTable("CategoryItem");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -270,6 +255,9 @@ namespace RzeczyDoOddania.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -286,7 +274,13 @@ namespace RzeczyDoOddania.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Items");
                 });
@@ -311,21 +305,6 @@ namespace RzeczyDoOddania.Data.Migrations
                     b.HasIndex("ItemId");
 
                     b.ToTable("InterestedUsers");
-                });
-
-            modelBuilder.Entity("CategoryItem", b =>
-                {
-                    b.HasOne("RzeczyDoOddania.Models.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RzeczyDoOddania.Models.Item", null)
-                        .WithMany()
-                        .HasForeignKey("ItemsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -379,6 +358,17 @@ namespace RzeczyDoOddania.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RzeczyDoOddania.Models.Item", b =>
+                {
+                    b.HasOne("RzeczyDoOddania.Models.Category", "Category")
+                        .WithMany("Items")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("RzeczyDoOddania.Models.SiteUser", b =>
                 {
                     b.HasOne("RzeczyDoOddania.Models.Item", "Item")
@@ -388,6 +378,11 @@ namespace RzeczyDoOddania.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("RzeczyDoOddania.Models.Category", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("RzeczyDoOddania.Models.Item", b =>

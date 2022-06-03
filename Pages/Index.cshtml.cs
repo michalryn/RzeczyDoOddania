@@ -5,6 +5,7 @@ using RzeczyDoOddania.Models;
 using Microsoft.EntityFrameworkCore;
 using RzeczyDoOddania.Data;
 using RzeczyDoOddania.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace RzeczyDoOddania.Pages
 {
@@ -18,37 +19,35 @@ namespace RzeczyDoOddania.Pages
             _logger = logger;
             _registerItem = registerItem;
         }
-        public Item Item { get; set; }
         [BindProperty]
-        public int[] SelectedCategories { get; set; }
-        public MultiSelectList Options { get; set; }
-        public string result { get; set; }
-        public List<SelectListItem> GetOptions()
-        {
-            return _registerItem.GetCategories().Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.Name
-            }).ToList();
-        }
+        public Item Item { get; set; }
+
+        [BindProperty]
+        public int SelectedCategorie { get; set; }
+        public SelectList Options { get; set; }
+
         public void OnGet()
         {
-            var options = GetOptions();
-            Options = new MultiSelectList(options, "Value", "Text");
+            var options = _registerItem.GetOptions();
+            Options = new SelectList(options, "Value", "Text");
         }
 
-        public IActionResult OnPost(List<string> SelectedCategories)
+        public async Task<IActionResult> OnPost()
         {
-            if(SelectedCategories.Count > 0)
+            var option = await _registerItem.GetCategory(SelectedCategorie);
+            Item.Category = option;
+            Item.Date = DateTime.Now.AddDays(30);
+            Item.UserName = "NotLoggedIn";
+            Item.Image = new byte[] { 0 };
+
+            if (ModelState.IsValid)
             {
-                foreach(var category in SelectedCategories)
-                {
-                    result += category;
-                }
+                _registerItem.RegisterItem(Item);
+                return Page();
             }
 
-            var options = GetOptions();
-            Options = new MultiSelectList(options, "Value", "Text");
+            var options = _registerItem.GetOptions();
+            Options = new SelectList(options, "Value", "Text");
             return Page();
         }
     }

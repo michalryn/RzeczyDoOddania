@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RzeczyDoOddania.Data.Migrations
 {
-    public partial class FirstModels : Migration
+    public partial class pierwsza : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,33 +32,17 @@ namespace RzeczyDoOddania.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CategoryItem",
-                columns: table => new
-                {
-                    CategoriesId = table.Column<int>(type: "int", nullable: false),
-                    ItemsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategoryItem", x => new { x.CategoriesId, x.ItemsId });
                     table.ForeignKey(
-                        name: "FK_CategoryItem_Categories_CategoriesId",
-                        column: x => x.CategoriesId,
+                        name: "FK_Items_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CategoryItem_Items_ItemsId",
-                        column: x => x.ItemsId,
-                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -84,29 +68,26 @@ namespace RzeczyDoOddania.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryItem_ItemsId",
-                table: "CategoryItem",
-                column: "ItemsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_InterestedUsers_ItemId",
                 table: "InterestedUsers",
                 column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_CategoryId",
+                table: "Items",
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CategoryItem");
-
-            migrationBuilder.DropTable(
                 name: "InterestedUsers");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Items");
 
             migrationBuilder.DropTable(
-                name: "Items");
+                name: "Categories");
         }
     }
 }

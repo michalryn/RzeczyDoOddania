@@ -17,5 +17,10 @@ namespace RzeczyDoOddania.Repositries
         {
             return _context.Categories;
         }
+
+        public async Task<Category> GetCategory(int id)
+        {
+            return await _context.Categories.FindAsync(id);
+        }
     }
 }

@@ -20,13 +20,15 @@ namespace RzeczyDoOddania.Models
         public string Address { get; set; }
 
         [Display(Name = "Wygaśnięcie ogłoszenia")]
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
-        [Display(Name = "Kategorie")]
-        public virtual ICollection<Category> Categories { get; set; }
+        [Display(Name = "Kategoria")]
+        public Category? Category { get; set; }
         
-        public byte[] Image { get; set; }
+        public byte[]? Image { get; set; }
+
+        public string? UserName { get; set; }
         
-        public virtual ICollection<SiteUser> InterestedUsers { get; set; }
+        public virtual ICollection<SiteUser>? InterestedUsers { get; set; }
     }
 }
