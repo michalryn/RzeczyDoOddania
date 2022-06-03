@@ -23,7 +23,8 @@ namespace RzeczyDoOddania.Pages
         public Item Item { get; set; }
 
         [BindProperty]
-        public int SelectedCategorie { get; set; }
+        [Required(ErrorMessage = "Wybierz kategorię")]
+        public int? SelectedCategorie { get; set; }
         public SelectList Options { get; set; }
 
         public void OnGet()
@@ -34,8 +35,13 @@ namespace RzeczyDoOddania.Pages
 
         public async Task<IActionResult> OnPost()
         {
-            var option = await _registerItem.GetCategory(SelectedCategorie);
-            Item.Category = option;
+            if(SelectedCategorie != null)
+            {
+                var select = int.Parse(SelectedCategorie.ToString());
+                var option = await _registerItem.GetCategory(select);
+                Item.Category = option;
+            }
+            
             Item.Date = DateTime.Now.AddDays(30);
             Item.UserName = "NotLoggedIn";
             Item.Image = new byte[] { 0 };
@@ -43,7 +49,6 @@ namespace RzeczyDoOddania.Pages
             if (ModelState.IsValid)
             {
                 _registerItem.RegisterItem(Item);
-                return Page();
             }
 
             var options = _registerItem.GetOptions();
