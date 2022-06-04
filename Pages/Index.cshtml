@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="col form-group">
         <div>
             <label asp-for="Item.Name" class="col-form-label"></label>
@@ -26,8 +26,12 @@
         </div>
         <div>
             <label asp-for="Item.Category" class="col-form-label"></label>
-            <select asp-for="SelectedCategorie" asp-items="Model.Options" class="mySelect2 js-example-placeholder-single js-states form-control" style="width: 100%"></select>
+            <select asp-for="SelectedCategorie" asp-items="Model.Options" class="mySelect2 js-example-placeholder-single js-states dropdown-menu" style="width: 100%"></select>
             <span asp-validation-for="SelectedCategorie" class="text-danger fw-bold"></span>
+        </div>
+        <div>
+            <label asp-for=Item.Image class="col-form-label"></label>
+            <input type="file" id="file1" name="file1" multiple="multiple" class="form-control" />
         </div>
     </div>
     <button type="submit" class="btn btn-primary">Zatwierdź</button>

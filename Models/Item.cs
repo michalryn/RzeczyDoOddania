@@ -25,6 +25,7 @@ namespace RzeczyDoOddania.Models
         [Display(Name = "Kategoria")]
         public Category? Category { get; set; }
         
+        [Display(Name = "Zdejęcia")]
         public byte[]? Image { get; set; }
 
         public string? UserName { get; set; }

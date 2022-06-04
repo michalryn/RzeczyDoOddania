@@ -35,19 +35,28 @@ namespace RzeczyDoOddania.Pages
 
         public async Task<IActionResult> OnPost()
         {
-            if(SelectedCategorie != null)
+            foreach (var file in Request.Form.Files)
+            {
+                MemoryStream ms = new MemoryStream();
+                file.CopyTo(ms);
+                var img = ms.ToArray();
+
+                ms.Close();
+                ms.Dispose();
+                Item.Image = img;
+            }
+
+            if (SelectedCategorie != null)
             {
                 var select = int.Parse(SelectedCategorie.ToString());
                 var option = await _registerItem.GetCategory(select);
                 Item.Category = option;
             }
-            
-            Item.Date = DateTime.Now.AddDays(30);
-            Item.UserName = "NotLoggedIn";
-            Item.Image = new byte[] { 0 };
 
             if (ModelState.IsValid)
             {
+                Item.Date = DateTime.Now.AddDays(30);
+                Item.UserName = "NotLoggedIn";
                 _registerItem.RegisterItem(Item);
             }
 
