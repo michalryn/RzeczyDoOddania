@@ -5,5 +5,6 @@ namespace RzeczyDoOddania.Interfaces
     public interface IItemRepo
     {
         void AddItem(Item item);
+        Task<IQueryable<Item>> GetItems();
     }
 }
