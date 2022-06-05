@@ -1,6 +1,7 @@
 ﻿using RzeczyDoOddania.Interfaces;
 using RzeczyDoOddania.Data;
 using RzeczyDoOddania.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace RzeczyDoOddania.Repositries
 {
@@ -17,6 +18,10 @@ namespace RzeczyDoOddania.Repositries
         {
             _context.Items.Add(item);
             _context.SaveChanges();
+        }
+        public async Task<IQueryable<Item>> GetItems()
+        {
+            return _context.Items.Include(c => c.Category);
         }
     }
 }

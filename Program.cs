@@ -19,6 +19,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddTransient<ICategoryRepo, CategoryRepo>();
 builder.Services.AddTransient<IRegisterItemService, RegisterItemService>();
 builder.Services.AddTransient<IItemRepo, ItemRepo>();
+builder.Services.AddTransient<ISearchService, SearchService>();
 
 builder.Services.AddRazorPages();
 
