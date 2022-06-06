@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RzeczyDoOddania.Models;
 using RzeczyDoOddania.Interfaces;
+using RzeczyDoOddania.ViewModels.Item;
 
 namespace RzeczyDoOddania.Pages
 {
@@ -12,13 +13,10 @@ namespace RzeczyDoOddania.Pages
         {
             _searchService = searchService;
         }
-        public IList<Item> Items { get; set; }
-        public string imageData { get; set; }
+        public IList<ItemForSearch> Items { get; set; }
         public async Task OnGet()
         {
             Items = await _searchService.GetItems();
-            string imageBase64Data = Convert.ToBase64String(Items[0].Image);
-            imageData = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
         }
     }
 }

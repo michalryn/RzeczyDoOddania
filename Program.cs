@@ -26,7 +26,7 @@ builder.Services.AddTransient<ISearchService, SearchService>();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
-   
+
 builder.Services.Configure<DataProtectionTokenProviderOptions>(o =>
      o.TokenLifespan = TimeSpan.FromHours(3));
 

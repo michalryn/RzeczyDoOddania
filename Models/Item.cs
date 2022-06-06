@@ -22,13 +22,13 @@ namespace RzeczyDoOddania.Models
         [Display(Name = "Wygaśnięcie ogłoszenia")]
         public DateTime? Date { get; set; }
 
-        [Display(Name = "Kategoria")]
-        public Category? Category { get; set; }
+        [Display(Name = "Kategorie")]
+        public virtual ICollection<Category>? Categories { get; set; }
         
-        [Display(Name = "Zdejęcia")]
-        public byte[]? Image { get; set; }
+        [Display(Name = "Zdjęcia")]
+        public virtual ICollection<Image>? Images { get; set; }
 
-        public string? UserName { get; set; }
+        public string? OwnerName { get; set; }
         
         public virtual ICollection<SiteUser>? InterestedUsers { get; set; }
     }

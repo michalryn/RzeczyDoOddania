@@ -40,8 +40,6 @@ namespace RzeczyDoOddania.Services
                 Text = c.Name
             }).ToList();
 
-            options.Insert(0, new SelectListItem());
-
             return options;
         }
     }

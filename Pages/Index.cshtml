@@ -6,9 +6,13 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-
+@if(ViewData["Id"] != null)
+{
+    @ViewData["Id"];
+}
 <form method="post" enctype="multipart/form-data">
     <div class="col form-group">
+        <div asp-validation-summary="All"></div>
         <div>
             <label asp-for="Item.Name" class="col-form-label"></label>
             <input asp-for="Item.Name" class="form-control" />
@@ -25,16 +29,17 @@
             <span asp-validation-for="Item.Description" class="text-danger fw-bold"></span>
         </div>
         <div>
-            <label asp-for="Item.Category" class="col-form-label"></label>
-            <select asp-for="SelectedCategorie" asp-items="Model.Options" class="mySelect2 js-example-placeholder-single js-states dropdown-menu" style="width: 100%"></select>
-            <span asp-validation-for="SelectedCategorie" class="text-danger fw-bold"></span>
+            <label asp-for="SelectedCategories" class="col-form-label"></label>
+            <select asp-for="SelectedCategories" asp-items="Model.Options" multiple="multiple" class="mySelect2 js-example-placeholder-multiple js-states dropdown-menu" style="width: 100%"></select>
+            <span asp-validation-for="SelectedCategories" initial-value="" class="text-danger fw-bold"></span>
         </div>
         <div>
-            <label asp-for=Item.Image class="col-form-label"></label>
-            <input type="file" id="file1" name="file1" multiple="multiple" class="form-control" />
+            <label asp-for=Item.Images class="col-form-label"></label>
+            <input asp-for=FormFiles type="file" multiple="multiple" class="form-control" />
+            <span asp-validation-for="FormFiles" class="text-danger fw-bold"> </span>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Zatwierdź</button>
+    <button type="submit" class="btn btn-primary" value="Upload">Zatwierdź</button>
 
 </form>
 

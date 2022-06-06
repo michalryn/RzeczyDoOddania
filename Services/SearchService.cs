@@ -1,5 +1,6 @@
 ﻿using RzeczyDoOddania.Models;
 using RzeczyDoOddania.Interfaces;
+using RzeczyDoOddania.ViewModels.Item;
 
 namespace RzeczyDoOddania.Services
 {
@@ -11,10 +12,24 @@ namespace RzeczyDoOddania.Services
         {
             _itemRepo = itemRepo;
         }
-        public async Task<IList<Item>> GetItems()
+        public async Task<IList<ItemForSearch>> GetItems()
         {
             var items = await _itemRepo.GetItems();
-            return items.ToList();
+            var itemForSearchList = new List<ItemForSearch>();
+            foreach (var item in items)
+            {
+                var images = item.Images.ToList();
+                string imageBase64Data = Convert.ToBase64String(images[0].Data);
+                var imagedata = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+                itemForSearchList.Add(new ItemForSearch
+                {
+                    Name = item.Name,
+                    Address = item.Address,
+                    Date = item.Date,
+                    Image = imagedata
+                });
+            }
+            return itemForSearchList;
         }
     }
 }

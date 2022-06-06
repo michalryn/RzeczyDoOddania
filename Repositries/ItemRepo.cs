@@ -21,7 +21,7 @@ namespace RzeczyDoOddania.Repositries
         }
         public async Task<IQueryable<Item>> GetItems()
         {
-            return _context.Items.Include(c => c.Category);
+            return _context.Items.Include(i => i.Images);
         }
     }
 }
