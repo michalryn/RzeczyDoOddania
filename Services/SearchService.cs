@@ -14,7 +14,7 @@ namespace RzeczyDoOddania.Services
         }
         public async Task<IList<ItemForSearch>> GetItems()
         {
-            var items = await _itemRepo.GetItems();
+            var items = _itemRepo.GetItems();
             var itemForSearchList = new List<ItemForSearch>();
             foreach (var item in items)
             {
@@ -23,6 +23,7 @@ namespace RzeczyDoOddania.Services
                 var imagedata = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
                 itemForSearchList.Add(new ItemForSearch
                 {
+                    Id = item.Id,
                     Name = item.Name,
                     Address = item.Address,
                     Date = item.Date,

@@ -19,9 +19,15 @@ namespace RzeczyDoOddania.Repositries
             _context.Items.Add(item);
             _context.SaveChanges();
         }
-        public async Task<IQueryable<Item>> GetItems()
+
+        public Item GetItem(int? id)
         {
-            return _context.Items.Include(i => i.Images);
+            return _context.Items.Include(i => i.Images).Include(c => c.Categories).AsSplitQuery().FirstOrDefault(i => i.Id == id);
+        }
+
+        public IQueryable<Item> GetItems()
+        {
+            return _context.Items.Include(i => i.Images).AsSplitQuery().Include(c => c.Categories);
         }
     }
 }

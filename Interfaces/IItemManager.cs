@@ -2,10 +2,8 @@
 
 namespace RzeczyDoOddania.Interfaces
 {
-    public interface IItemRepo
+    public interface IItemManager
     {
-        void AddItem(Item item);
-        IQueryable<Item> GetItems();
         Item GetItem(int? id);
     }
 }
