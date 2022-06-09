@@ -16,3 +16,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.logo {
+    height: 35px !important;
+    width: auto;
+}
+.biglogo {
+    height: 200px !important;
+    width: auto;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+}
