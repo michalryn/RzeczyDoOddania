@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,9 +13,11 @@ namespace RzeczyDoOddania.Pages
     public class RegisterItemModel : PageModel
     {
         private readonly IRegisterItemService _registerItem;
-        public RegisterItemModel(IRegisterItemService registerItem)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public RegisterItemModel(IRegisterItemService registerItem, UserManager<ApplicationUser> userManager)
         {
             _registerItem = registerItem;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -52,7 +55,6 @@ namespace RzeczyDoOddania.Pages
                     ms.Close();
                     ms.Dispose();
                     var image = new Image { Data = img };
-
                     Item.Images.Add(image);
                 }
 
@@ -68,6 +70,8 @@ namespace RzeczyDoOddania.Pages
                 }
                 Item.Date = DateTime.Now.AddDays(30);
                 Item.OwnerName = User.Identity.Name;
+                //var user = await _userManager.GetUserAsync(User);
+                //await _userManager.UpdateAsync(user);
                 _registerItem.RegisterItem(Item);
             }
 
