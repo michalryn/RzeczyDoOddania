@@ -13,7 +13,7 @@ namespace RzeczyDoOddania.Pages
         {
             _searchService = searchService;
         }
-        public IList<ItemForSearch> Items { get; set; }
+        public IList<ItemForSearchVM> Items { get; set; }
         public async Task OnGet()
         {
             Items = await _searchService.GetItems();

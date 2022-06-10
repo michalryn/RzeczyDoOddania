@@ -12,22 +12,26 @@ namespace RzeczyDoOddania.Services
         {
             _itemRepo = itemRepo;
         }
-        public async Task<IList<ItemForSearch>> GetItems()
+        public async Task<IList<ItemForSearchVM>> GetItems()
         {
             var items = _itemRepo.GetItems();
-            var itemForSearchList = new List<ItemForSearch>();
+            var itemForSearchList = new List<ItemForSearchVM>();
             foreach (var item in items)
             {
                 var images = item.Images.ToList();
                 string imageBase64Data = Convert.ToBase64String(images[0].Data);
                 var imagedata = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
-                itemForSearchList.Add(new ItemForSearch
+                
+                itemForSearchList.Add(new ItemForSearchVM
                 {
                     Id = item.Id,
                     Name = item.Name,
                     Address = item.Address,
+                    Categories = item.Categories?.ToList(),
                     Date = item.Date,
-                    Image = imagedata
+                    Image = imagedata,
+                    ReservedFor = item.ReservedFor,
+                    InterestUsersCount = item.InterestedUsers?.Count()
                 });
             }
             return itemForSearchList;

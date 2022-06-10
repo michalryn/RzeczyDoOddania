@@ -1,6 +1,31 @@
 ﻿@page "{id:int?}"
+@using RzeczyDoOddania.Models;
+@inject SignInManager<ApplicationUser> _signInManager;
+@inject UserManager<ApplicationUser> _userManager;
 @model RzeczyDoOddania.Pages.ItemPageModel
 @{
     ViewData["Title"] = "Strona przedmiotu";
+}
+
+<div>
+    @Model.Item.Name
+</div>
+@if (_signInManager.IsSignedIn(User) && Model.Item.Owner != await _userManager.GetUserAsync(User))
+{
+    @if (!Model.IsInterested)
+    {
+        <form method="post">
+            <input type="hidden" asp-for="IsInterested" value="true"/>
+            <button type="submit" class="btn btn-primary">Zgłoś zainteresoawnie</button>
+        </form>
+    }
+    else
+    {
+        <form method="post">
+            <input type="hidden" asp-for="IsInterested" value="false"/>
+            <button type="submit" class="btn btn-primary">Przestań się interesować</button>
+        </form>
+    }
+
 }
 

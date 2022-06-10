@@ -4,43 +4,57 @@
     ViewData["Title"] = "Wyszukiwanie";
 }
 
-<table class="table">
+@*<table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Items[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Items[0].Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Items[0].Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Items[0].Image)
-            </th>
-        </tr>
+    <tr>
+    <th>
+    @Html.DisplayNameFor(model => model.Items[0].Name)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.Items[0].Address)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.Items[0].Date)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.Items[0].Image)
+    </th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Items)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelitem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelitem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelitem => item.Date)
-                </td>
-                <td>
-                    <image src="@item.Image" width="100" height="auto"></image>
-                </td>
-                <td>
-                    <a asp-page="/ItemPage" asp-route-id="@item.Id" class="btn btn-primary nav-link text-light">Wyświetl</a>
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model.Items)
+    {
+    <tr>
+    <td>
+    @Html.DisplayFor(modelitem => item.Name)
+    </td>
+    <td>
+    @Html.DisplayFor(modelitem => item.Address)
+    </td>
+    <td>
+    @Html.DisplayFor(modelitem => item.Date)
+    </td>
+    <td>
+    <image src="@item.Image" width="100" height="auto"></image>
+    </td>
+    <td>
+    <a asp-page="/ItemPage" asp-route-id="@item.Id" class="btn btn-primary nav-link text-light">Wyświetl</a>
+    </td>
+    </tr>
+    }
     </tbody>
-</table>
+    </table>*@
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model.Items)
+    {
+        <div class="card" style="width: 15rem;">
+            <img src="@item.Image" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">@item.Address</p>
+                <p class="card-text"><small class="text-muted">Wygasa: @Html.DisplayFor(modelitem => item.Date)</small></p>
+                <a asp-page="/ItemPage" asp-route-id="@item.Id" class="btn btn-primary nav-link text-light">Wyświetl</a>
+            </div>
+        </div>
+    }
+</div>

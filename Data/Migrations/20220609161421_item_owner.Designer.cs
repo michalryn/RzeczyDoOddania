@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RzeczyDoOddania.Data;
 
@@ -11,9 +12,10 @@ using RzeczyDoOddania.Data;
 namespace RzeczyDoOddania.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220609161421_item_owner")]
+    partial class item_owner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -299,9 +301,6 @@ namespace RzeczyDoOddania.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Completed")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
@@ -317,29 +316,11 @@ namespace RzeczyDoOddania.Data.Migrations
                     b.Property<string>("OwnerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ReservedFor")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Items", "Identity");
-                });
-
-            modelBuilder.Entity("RzeczyDoOddania.Models.UserItem", b =>
-                {
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ItemId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserItem", "Identity");
                 });
 
             modelBuilder.Entity("CategoryItem", b =>
@@ -426,25 +407,6 @@ namespace RzeczyDoOddania.Data.Migrations
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("RzeczyDoOddania.Models.UserItem", b =>
-                {
-                    b.HasOne("RzeczyDoOddania.Models.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RzeczyDoOddania.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RzeczyDoOddania.Models.ApplicationUser", b =>

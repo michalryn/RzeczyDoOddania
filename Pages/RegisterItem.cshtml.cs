@@ -69,9 +69,8 @@ namespace RzeczyDoOddania.Pages
                     }
                 }
                 Item.Date = DateTime.Now.AddDays(30);
-                Item.OwnerName = User.Identity.Name;
-                //var user = await _userManager.GetUserAsync(User);
-                //await _userManager.UpdateAsync(user);
+                Item.Completed = false;
+                Item.Owner = await _userManager.GetUserAsync(User);
                 _registerItem.RegisterItem(Item);
             }
 
