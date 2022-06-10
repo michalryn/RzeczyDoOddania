@@ -22,10 +22,25 @@ body {
     width: auto;
 }
 .biglogo {
-    height: 200px !important;
+    height: 180px !important;
     width: auto;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
 }
+.con {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#img {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+#wrapper {
+    margin-top: 50px;
+    display: flex;
+}
+
