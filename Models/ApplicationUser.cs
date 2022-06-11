@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-
 namespace RzeczyDoOddania.Models
 {
     public class ApplicationUser : IdentityUser
