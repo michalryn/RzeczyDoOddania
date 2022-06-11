@@ -4,29 +4,27 @@
     ViewData["Title"] = "Wyszukiwanie";
 }
 
-<body>
-    <div class="card-columns">
-   
-        @foreach (var item in Model.Items)       
-        {           
-            <div class="card">   
-                <div class="card-img-top">
-                    <image src="@item.Image" width="100" height="auto"></image>   
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model.Items)
+    {
+        <div class="col">
+            <div class="card" style="width: 18rem">
+                <img src="@item.Image" class="card-img-top">
+                <div class="card-body card-text">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p>@item.Address</p>
+                    <p>
+                        @foreach(var category in item.Categories)
+                        {
+                            <span class="badge rounded-pill bg-warning">@category.Name</span>
+                        }
+                    </p>
+                    <a asp-page="/ItemPage" asp-route-id="@item.Id" class="btn btn-primary nav-link text-light">Wyświetl</a>
                 </div>
-                  
-                <div class="card-body">   
-                    <div class="card-body">                       
-                        <h5 class="card-title">                         
-                            <br><b>@Html.DisplayFor(modelitem => item.Name) </b>
-                        </h5>
-                        <h5>
-                            <br><b>@Html.DisplayFor(modelitem => item.Address)</b>                          
-                            <br><b>@Html.DisplayFor(modelitem => item.Date)</b>
-                            <br><a asp-page="/ItemPage" asp-route-id="@item.Id" class="btn btn-secondary">Wyświetl</a>
-                        </h5>
-                    </div>                    
-                </div>               
+                <div class="card-footer">
+                    <small class="text-muted">Wygasa: @Html.DisplayFor(modelitem => item.Date)</small>
+                </div>
             </div>
-        }
-    </div>
-</body>
+        </div>
+    }
+</div>
