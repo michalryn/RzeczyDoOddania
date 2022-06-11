@@ -14,7 +14,7 @@ namespace RzeczyDoOddania.Data
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<SiteUser> InterestedUsers { get; set; }
+        //public DbSet<SiteUser> SiteUsers { get; set; }
         public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -24,6 +24,16 @@ namespace RzeczyDoOddania.Data
             builder.Entity<ApplicationUser>(entity =>
             {
                 entity.ToTable(name: "User");
+
+                entity.HasMany(u => u.Items)
+                .WithOne(i => i.Owner);
+
+                entity.HasMany(u => u.InterestingItems)
+                .WithMany(i => i.InterestedUsers)
+                .UsingEntity<UserItem>(x => x.HasOne(x => x.Item)
+                .WithMany().HasForeignKey(x => x.ItemId),
+                x => x.HasOne(x => x.User)
+                .WithMany().HasForeignKey(x => x.UserId));
             });
             builder.Entity<IdentityRole>(entity =>
             {

@@ -5,6 +5,6 @@ namespace RzeczyDoOddania.Interfaces
 {
     public interface ISearchService
     {
-        Task<IList<ItemForSearch>> GetItems();
+        Task<IList<ItemForSearchVM>> GetItems();
     }
 }

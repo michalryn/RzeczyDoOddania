@@ -28,8 +28,13 @@ namespace RzeczyDoOddania.Models
         [Display(Name = "Zdjęcia")]
         public virtual ICollection<Image>? Images { get; set; }
 
-        public string? OwnerName { get; set; }
+        [Display(Name = "Właściciel")]
+        public ApplicationUser? Owner { get; set; }
+
+        public bool? Completed { get; set; }
+
+        public string? ReservedFor { get; set; }
         
-        public virtual ICollection<SiteUser>? InterestedUsers { get; set; }
+        public virtual ICollection<ApplicationUser>? InterestedUsers { get; set; }
     }
 }
