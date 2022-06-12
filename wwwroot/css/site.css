@@ -89,4 +89,7 @@ body {
     width: 50% !important;
 }
 
+.select2-container--default .select2-selection--multiple {
+    border: 1px solid #ced4da !important;
+}
 
