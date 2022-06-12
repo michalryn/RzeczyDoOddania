@@ -6,7 +6,9 @@
 @{
     ViewData["Title"] = "Strona przedmiotu";
     int i = 0;
-}
+}<head>
+    <script src="https://kit.fontawesome.com/a26751704a.js" crossorigin="anonymous"></script>
+</head>
 
 <div id="wrapper">    
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel"> 
@@ -16,7 +18,7 @@
                 i++;
                 var active = i == 1 ? "active" : "";
                 <div class="carousel-item @active">
-                    <img src="@image" class="d-block w-100" alt="...">
+                    <img src="@image" class="d-block w-100 imga" alt="...">
                 </div>
             }          
         </div> 
@@ -29,21 +31,22 @@
             <span class="visually-hidden">Next</span>  
         </button>
     </div>
-    <div class="">
-        <h5 class="card-title">@Model.Item.Name</h5>        
+    <div class="text">
+        <font size="+5"><b>@Model.Item.Name</b></font>
         <br />
         Kategorie:
-        <br />
         @foreach(var category in Model.Item.Categories)   
         {      
             <span class="badge rounded-pill bg-warning">@category.Name</span> 
         }   
         <br />
         @Model.Item.Description   
-        <br />
-        Adres: @Model.Item.Address   
-        <br />
-        Data: @Model.Item.Date
+        <div id="content">
+            Adres odbioru: @Model.Item.Address   
+            <br />
+            Data wygaśnięcia: @Model.Item.Date
+        </div>
+        
     </div>
 
 @if (_signInManager.IsSignedIn(User) && Model.Item.Owner != await _userManager.GetUserAsync(User))
@@ -52,14 +55,14 @@
     {
         <form method="post">
             <input type="hidden" asp-for="IsInterested" value="true" />
-            <button type="submit" asp-page-handler="Interest" class="btn btn-primary">Zgłoś zainteresoawnie</button>
+            <button type="submit" asp-page-handler="Interest" class="btn btn-primary"><i class="fa-solid fa-heart-circle-plus"></i></button>
         </form>
     }
     else
     {
         <form method="post">
             <input type="hidden" asp-for="IsInterested" value="false" />
-            <button type="submit" asp-page-handler="Interest" class="btn btn-outline-danger">Przestań się interesować</button>
+            <button type="submit" asp-page-handler="Interest" class="btn btn-outline-danger"><i class="fa-solid fa-heart-circle-minus"></i></button>
         </form>
     }
 }
@@ -98,4 +101,3 @@
         </table>
     </div>
 }
-

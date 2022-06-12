@@ -9,6 +9,7 @@ namespace RzeczyDoOddania.Pages
 {
     public class ItemPageModel : PageModel
     {
+
         private readonly IItemManager _itemManager;
         private readonly UserManager<ApplicationUser> _userManager;
         public ItemPageModel(IItemManager itemManager, UserManager<ApplicationUser> userManager)
@@ -126,6 +127,7 @@ namespace RzeczyDoOddania.Pages
 
 
             return RedirectToPage();
+
         }
     }
 }

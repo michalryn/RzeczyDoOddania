@@ -11,5 +11,6 @@ namespace RzeczyDoOddania.Interfaces
         void RemoveInterestedUser(int? id, ApplicationUser interestedUser);
         void SaveItem(Item item);
         Item GetItemNoRelations(int? id);
+        IQueryable<Item> GetItemsSearch(string? search);
     }
 }

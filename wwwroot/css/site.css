@@ -42,6 +42,14 @@ body {
 #wrapper{
     display: flex;
 }
+#content {
+    position: absolute;
+    bottom: 0;
+}
+.text {
+    position: relative;
+    width: 520px;
+}
 
 .card {
     transition: transform 0.15s ease-in, transform 0.2s ease-out;
@@ -88,5 +96,8 @@ body {
 .carousel {
     width: 50% !important;
 }
-
+.imga{
+    height: 50%;
+    width: 50%;
+}
 

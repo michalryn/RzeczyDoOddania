@@ -53,5 +53,10 @@ namespace RzeczyDoOddania.Repositries
         {
             return _context.Items.Where(i => i.Id == id).FirstOrDefault();
         }
+        public IQueryable<Item> GetItemsSearch(string? search)
+        {
+            return _context.Items.Where(i => i.Name.Contains(search)).Include(u => u.InterestedUsers).AsSplitQuery().Include(i => i.Images).Include(c => c.Categories);
+        }
+
     }
 }
