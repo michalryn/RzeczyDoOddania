@@ -6,7 +6,9 @@
 @{
     ViewData["Title"] = "Strona przedmiotu";
     int i = 0;
-}
+}<head>
+    <script src="https://kit.fontawesome.com/a26751704a.js" crossorigin="anonymous"></script>
+</head>
 
 <div id="wrapper">    
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel"> 
@@ -16,7 +18,7 @@
                 i++;
                 var active = i == 1 ? "active" : "";
                 <div class="carousel-item @active">
-                    <img src="@image" class="d-block w-100" alt="...">
+                    <img src="@image" class="d-block w-100 imga" alt="...">
                 </div>
             }          
         </div> 
@@ -29,21 +31,22 @@
             <span class="visually-hidden">Next</span>  
         </button>
     </div>
-    <div class="">
-        <h5 class="card-title">@Model.Item.Name</h5>        
+    <div class="text">
+        <font size="+5"><b>@Model.Item.Name</b></font>
         <br />
         Kategorie:
-        <br />
         @foreach(var category in Model.Item.Categories)   
         {      
             <span class="badge rounded-pill bg-warning">@category.Name</span> 
         }   
         <br />
         @Model.Item.Description   
-        <br />
-        Adres: @Model.Item.Address   
-        <br />
-        Data: @Model.Item.Date
+        <div id="content">
+            Adres odbioru: @Model.Item.Address   
+            <br />
+            Data wygaśnięcia: @Model.Item.Date
+        </div>
+        
     </div>
 
 @if (_signInManager.IsSignedIn(User) && Model.Item.Owner != await _userManager.GetUserAsync(User))
@@ -52,26 +55,37 @@
     {
         <form method="post">
             <input type="hidden" asp-for="IsInterested" value="true" />
-            <button type="submit" asp-page-handler="Interest" class="btn btn-primary">Zgłoś zainteresoawnie</button>
+            <button type="submit" asp-page-handler="Interest" class="btn btn-primary"><i class="fa-solid fa-heart-circle-plus"></i></button>
         </form>
     }
     else
     {
         <form method="post">
             <input type="hidden" asp-for="IsInterested" value="false" />
-            <button type="submit" asp-page-handler="Interest" class="btn btn-outline-danger">Przestań się interesować</button>
+            <button type="submit" asp-page-handler="Interest" class="btn btn-outline-danger"><i class="fa-solid fa-heart-circle-minus"></i></button>
         </form>
     }
 }
 @if (_signInManager.IsSignedIn(User) && Model.Item.Owner == await _userManager.GetUserAsync(User))
 {
-    <div>
-        <table>
-            <tbody>
-                @if (Model.Item.InterestedUsers != null)
-                    @foreach (var user in Model.Item.InterestedUsers)
-                    {
-                        <tr>
+    <div class="mb-3">
+        <div class="button-div">       
+            <a href="#popup" class="button">         
+                <button class="btn btn-primary">Zainteresowani</button>      
+            </a>     
+        </div>       
+        <div class="content" id="popup">   
+            <div class="toright">
+                <a href="#"><button class="btn btn-outline-danger"><i class="fa-solid fa-xmark"></i></button></a>            
+            </div>
+               
+            <br>       
+            <p><table>          
+                <tbody>              
+                    @if (Model.Item.InterestedUsers != null)                
+                    @foreach (var user in Model.Item.InterestedUsers)                  
+                    {                    
+                        <tr>                      
                             <td>@user.Email</td>
                             <td>
                                 @if (Model.Item.ReservedFor == null)
@@ -89,13 +103,12 @@
                                         <button type="submit" asp-page-handler="CancelReservation" class="btn btn-outline-danger">Anuluj rezerwację</button>
                                     </form>
                                 }
-                            </td>
+                            </td>                       
                         </tr>
                     }
-
-            </tbody>
-
-        </table>
+            </tbody>        
+        </table></p>     
+    </div>
+        
     </div>
 }
-
