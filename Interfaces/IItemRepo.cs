@@ -12,5 +12,7 @@ namespace RzeczyDoOddania.Interfaces
         void SaveItem(Item item);
         Item GetItemNoRelations(int? id);
         IQueryable<Item> GetItemsSearch(string? search);
+        IQueryable<Item> GetCategoriesSearch(int? id);
+        IQueryable<Item> GetBoth(string? search, int? id);
     }
 }

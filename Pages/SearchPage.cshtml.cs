@@ -15,15 +15,23 @@ namespace RzeczyDoOddania.Pages
         }
         
         public IList<ItemForSearchVM> Items { get; set; }
-        public async Task OnGet(string name)
+        public async Task OnGet(string? name, int? cid)
         {
-            if(name == null)
+            if((name == null) &&(cid==null))
             {
                 Items = await _searchService.GetItems();
             }
-            else
+            if ((name == null) && (cid != null))
+            {
+                Items = await _searchService.GetCategoriesSearch(cid);
+            }
+            if ((name != null) && (cid == null))
             {
                 Items = await _searchService.GetItemsSearch(name);
+            }
+            if ((name != null) && (cid != null))
+            {
+                Items = await _searchService.GetBoth(name,cid);
             }
         }
     }
