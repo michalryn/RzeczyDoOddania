@@ -25,9 +25,6 @@ namespace RzeczyDoOddania.Pages
             {
                 Items = await _searchService.GetItemsSearch(name);
             }
-            
-
-                
         }
     }
 }

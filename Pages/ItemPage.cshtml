@@ -68,7 +68,7 @@
 }
 @if (_signInManager.IsSignedIn(User) && Model.Item.Owner == await _userManager.GetUserAsync(User))
 {
-    <div>
+    <div class="mb-3">
         <div class="button-div">       
             <a href="#popup" class="button">         
                 <button class="btn btn-primary">Zainteresowani</button>      
@@ -76,7 +76,7 @@
         </div>       
         <div class="content" id="popup">   
             <div class="toright">
-                <a href="#"><i class="fa-solid fa-xmark"></i></a>    
+                <a href="#"><button class="btn btn-outline-danger"><i class="fa-solid fa-xmark"></i></button></a>            
             </div>
                
             <br>       
