@@ -17,14 +17,13 @@ namespace RzeczyDoOddania.Pages
         public IList<ItemForSearchVM> Items { get; set; }
         public async Task OnGet(string name)
         {
-            string? SearchString = name;
-            if(SearchString == null)
+            if(name == null)
             {
                 Items = await _searchService.GetItems();
             }
             else
             {
-                Items = await _searchService.GetItemsSearch(SearchString);
+                Items = await _searchService.GetItemsSearch(name);
             }
             
 
