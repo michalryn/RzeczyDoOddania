@@ -69,12 +69,23 @@
 @if (_signInManager.IsSignedIn(User) && Model.Item.Owner == await _userManager.GetUserAsync(User))
 {
     <div>
-        <table>
-            <tbody>
-                @if (Model.Item.InterestedUsers != null)
-                    @foreach (var user in Model.Item.InterestedUsers)
-                    {
-                        <tr>
+        <div class="button-div">       
+            <a href="#popup" class="button">         
+                <button class="btn btn-primary">Zainteresowani</button>      
+            </a>     
+        </div>       
+        <div class="content" id="popup">   
+            <div class="toright">
+                <a href="#"><i class="fa-solid fa-xmark"></i></a>    
+            </div>
+               
+            <br>       
+            <p><table>          
+                <tbody>              
+                    @if (Model.Item.InterestedUsers != null)                
+                    @foreach (var user in Model.Item.InterestedUsers)                  
+                    {                    
+                        <tr>                      
                             <td>@user.Email</td>
                             <td>
                                 @if (Model.Item.ReservedFor == null)
@@ -92,12 +103,12 @@
                                         <button type="submit" asp-page-handler="CancelReservation" class="btn btn-outline-danger">Anuluj rezerwację</button>
                                     </form>
                                 }
-                            </td>
+                            </td>                       
                         </tr>
                     }
-
-            </tbody>
-
-        </table>
+            </tbody>        
+        </table></p>     
+    </div>
+        
     </div>
 }

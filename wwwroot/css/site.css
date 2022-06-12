@@ -49,8 +49,9 @@ body {
 .text {
     position: relative;
     width: 520px;
+    margin-left: 20px;
 }
-
+}
 .card {
     transition: transform 0.15s ease-in, transform 0.2s ease-out;
 }
@@ -101,3 +102,26 @@ body {
     width: 50%;
 }
 
+.content {
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    visibility: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+.content:target {
+    opacity: 1;
+    visibility: visible;
+ }
+.toright {
+    text-align:right;
+    margin-right: 5px;
+}
