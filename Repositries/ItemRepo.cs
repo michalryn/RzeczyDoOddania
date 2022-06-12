@@ -55,7 +55,7 @@ namespace RzeczyDoOddania.Repositries
         }
         public IQueryable<Item> GetItemsSearch(string? search)
         {
-            return _context.Items.Where(i => i.Name.Contains(search)).Include(u => u.InterestedUsers).AsSplitQuery().Include(i => i.Images).Include(c => c.Categories);
+            return _context.Items.Where(i => i.Name.Contains(search) || i.Address.Contains(search)).Include(u => u.InterestedUsers).AsSplitQuery().Include(i => i.Images).Include(c => c.Categories);
         }
 
     }
