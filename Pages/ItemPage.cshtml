@@ -8,24 +8,57 @@
 }
 
 <div>
-    @Model.Item.Name
 </div>
 @if (_signInManager.IsSignedIn(User) && Model.Item.Owner != await _userManager.GetUserAsync(User))
 {
     @if (!Model.IsInterested)
     {
         <form method="post">
-            <input type="hidden" asp-for="IsInterested" value="true"/>
-            <button type="submit" class="btn btn-primary">Zgłoś zainteresoawnie</button>
+            <input type="hidden" asp-for="IsInterested" value="true" />
+            <button type="submit" asp-page-handler="Interest" class="btn btn-primary">Zgłoś zainteresoawnie</button>
         </form>
     }
     else
     {
         <form method="post">
-            <input type="hidden" asp-for="IsInterested" value="false"/>
-            <button type="submit" class="btn btn-primary">Przestań się interesować</button>
+            <input type="hidden" asp-for="IsInterested" value="false" />
+            <button type="submit" asp-page-handler="Interest" class="btn btn-outline-danger">Przestań się interesować</button>
         </form>
     }
+}
+@if (_signInManager.IsSignedIn(User) && Model.Item.Owner == await _userManager.GetUserAsync(User))
+{
+    <div>
+        <table>
+            <tbody>
+                @if (Model.Item.InterestedUsers != null)
+                    @foreach (var user in Model.Item.InterestedUsers)
+                    {
+                        <tr>
+                            <td>@user.Email</td>
+                            <td>
+                                @if (Model.Item.ReservedFor == null)
+                                {
+                                    <form method="post">
+                                        <input type="hidden" asp-for="ReservedFor" value="@user.Email"/>
+                                        <button type="submit" asp-page-handler="ConfirmReservation" class="btn btn-primary">Zarezerwuj</button>
+                                    </form>
 
+                                }
+                                else if(Model.Item.ReservedFor == user.Email)
+                                {
+                                    <form method="post">
+                                        <input type="hidden" asp-for="ReservedFor" value="@user.Email"/>
+                                        <button type="submit" asp-page-handler="CancelReservation" class="btn btn-outline-danger">Anuluj rezerwację</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+
+            </tbody>
+
+        </table>
+    </div>
 }
 

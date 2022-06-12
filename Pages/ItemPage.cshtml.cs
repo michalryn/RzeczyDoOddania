@@ -21,7 +21,11 @@ namespace RzeczyDoOddania.Pages
         [BindProperty]
         public bool IsInterested { get; set; }
 
+        [BindProperty]
+        public string? ReservedFor { get; set; }
+
         public ApplicationUser? CurrentUser { get; set; }
+        public Item? ItemNoRelations { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             CurrentUser = await _userManager.GetUserAsync(User);
@@ -32,14 +36,14 @@ namespace RzeczyDoOddania.Pages
                 return NotFound();
             }
 
-            Item = _itemManager.GetItem(id);
+            Item = _itemManager.GetItemPageVM(id);
 
             if (Item == null)
             {
                 return NotFound();
             }
 
-            var interest = Item.InterestedUsers?.Any(i => i.Id == CurrentUser.Id);
+            var interest = Item.InterestedUsers?.Any(i => i.Id == CurrentUser?.Id);
             if (interest != null && interest == true)
             {
                 IsInterested = true;
@@ -49,7 +53,7 @@ namespace RzeczyDoOddania.Pages
 
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostInterestAsync(int? id)
         {
             if (!ModelState.IsValid)
             {
@@ -66,6 +70,60 @@ namespace RzeczyDoOddania.Pages
             {
                 _itemManager.UnRegisterInterest(id, CurrentUser);
             }
+
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostConfirmReservationAsync(int? id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ItemNoRelations = _itemManager.GetItemNoRelations(id);
+
+            if (ItemNoRelations == null)
+            {
+                return NotFound();
+            }
+
+            ItemNoRelations.ReservedFor = ReservedFor;
+
+            _itemManager.SaveItem(ItemNoRelations);
+
+
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostCancelReservationAsync(int? id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ItemNoRelations = _itemManager.GetItemNoRelations(id);
+
+            if (ItemNoRelations == null)
+            {
+                return NotFound();
+            }
+
+            ItemNoRelations.ReservedFor = null;
+
+            _itemManager.SaveItem(ItemNoRelations);
+
 
             return RedirectToPage();
         }

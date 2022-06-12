@@ -3,18 +3,31 @@
 @{
     ViewData["Title"] = "Wyszukiwanie";
 }
-
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var item in Model.Items)
     {
         <div class="col">
             <div class="card" style="width: 18rem">
+                @if (item.ReservedFor == null)
+                {
+                    <div class="card-header position-relative" style="background-color: white; color: #68a675">
+                        Zainteresowani użytkownicy<span class="badge position-absolute translate-middle top-50" style="background-color: #68a675; left:90%">@item.InterestUsersCount</span>
+                    </div>
+                }
+                else
+                {
+                    <div class="card-header position-relative" style="background-color: white; color: #eb4f44">
+                        Zarezerwowany<span class="badge position-absolute translate-middle top-50" style="background-color: #eb4f44; left:90%"><i class="bi bi-exclamation-circle"></i></span>
+
+                    </div>
+                }
                 <img src="@item.Image" class="card-img-top">
                 <div class="card-body card-text">
+
                     <h5 class="card-title">@item.Name</h5>
                     <p>@item.Address</p>
                     <p>
-                        @foreach(var category in item.Categories)
+                        @foreach (var category in item.Categories)
                         {
                             <span class="badge rounded-pill bg-warning">@category.Name</span>
                         }
