@@ -42,6 +42,10 @@ namespace RzeczyDoOddania.Pages
 
         public async Task<IActionResult> OnPost()
         {
+            if(SelectedCategories?.Count() == 0)
+            {
+                ModelState.AddModelError("SelectedCategories", "Wybierz kategoriê");
+            }
             if (ModelState.IsValid)
             {
                 Item.Images = new List<Image>();

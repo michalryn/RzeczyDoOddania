@@ -9,7 +9,7 @@
 
 <form method="post" enctype="multipart/form-data">
     <div class="col form-group">
-        <div asp-validation-summary="All" style="color: #eb4f44"></div>
+        @*<div asp-validation-summary="All" style="color: #eb4f44"></div>*@
         <div>
             <label asp-for="Item.Name" class="col-form-label"></label>
             <input asp-for="Item.Name" class="form-control" />
@@ -28,7 +28,7 @@
         <div>
             <label asp-for="SelectedCategories" class="col-form-label"></label>
             <select asp-for="SelectedCategories" asp-items="Model.Options" multiple="multiple" class="mySelect2 form-select js-example-placeholder-multiple js-states dropdown-menu" style="width: 100%"></select>
-            <span asp-validation-for="SelectedCategories" initial-value="" class="text-danger fw-bold"></span>
+            <span asp-validation-for="SelectedCategories" class="text-danger fw-bold"></span>
         </div>
         <div>
             <label asp-for=Item.Images class="col-form-label"></label>
@@ -69,11 +69,11 @@
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
         border: 1px solid #ffc107;
         background-color: #ffc107;
-        color: #fff2d7;
+        color: white;
     }
 
     .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-        color: #fff2d7;
+        color: white;
     }
 
 </style>
