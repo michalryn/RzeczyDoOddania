@@ -9,5 +9,7 @@ namespace RzeczyDoOddania.Interfaces
         Item GetItem(int? id);
         void AddInterestedUser(int? id, ApplicationUser interestedUser);
         void RemoveInterestedUser(int? id, ApplicationUser interestedUser);
+        void SaveItem(Item item);
+        Item GetItemNoRelations(int? id);
     }
 }

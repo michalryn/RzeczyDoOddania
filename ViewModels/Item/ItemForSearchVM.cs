@@ -22,7 +22,7 @@ namespace RzeczyDoOddania.ViewModels.Item
         [Display(Name = "Zdjęcie")]
         public string Image { get; set; }
 
-        public string ReservedFor { get; set; }
+        public string? ReservedFor { get; set; }
         public int? InterestUsersCount { get; set; }
     }
 }

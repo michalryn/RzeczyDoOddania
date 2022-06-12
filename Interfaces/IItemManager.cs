@@ -5,8 +5,10 @@ namespace RzeczyDoOddania.Interfaces
 {
     public interface IItemManager
     {
-        ItemPageVM GetItem(int? id);
+        ItemPageVM GetItemPageVM(int? id);
         void RegisterInterest(int? id, ApplicationUser user);
         void UnRegisterInterest(int? id, ApplicationUser user);
+        void SaveItem(Item item);
+        Item GetItemNoRelations(int? id);
     }
 }

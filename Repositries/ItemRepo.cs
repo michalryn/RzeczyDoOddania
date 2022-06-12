@@ -27,7 +27,7 @@ namespace RzeczyDoOddania.Repositries
 
         public IQueryable<Item> GetItems()
         {
-            return _context.Items.Include(c => c.Categories).AsSplitQuery().Include(i => i.Images);
+            return _context.Items.Include(c => c.Categories).Include(u => u.InterestedUsers).AsSplitQuery().Include(i => i.Images);
         }
 
         public void AddInterestedUser(int? id, ApplicationUser interestedUser)
@@ -41,6 +41,17 @@ namespace RzeczyDoOddania.Repositries
             var item = _context.Items.Include(u => u.InterestedUsers).FirstOrDefault(i => i.Id == id);
             item.InterestedUsers.Remove(interestedUser);
             _context.SaveChanges();
+        }
+        
+        public void SaveItem(Item item)
+        {
+            _context.Items.Attach(item).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public Item GetItemNoRelations(int? id)
+        {
+            return _context.Items.Where(i => i.Id == id).FirstOrDefault();
         }
     }
 }

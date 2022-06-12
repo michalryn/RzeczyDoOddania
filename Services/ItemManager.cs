@@ -13,7 +13,7 @@ namespace RzeczyDoOddania.Services
             _itemRepo = itemRepo;
         }
 
-        public ItemPageVM GetItem(int? id)
+        public ItemPageVM GetItemPageVM(int? id)
         {
             var item = _itemRepo.GetItem(id);
             if(item == null)
@@ -51,6 +51,11 @@ namespace RzeczyDoOddania.Services
             _itemRepo.RemoveInterestedUser(id, user);
         }
 
+        public void SaveItem(Item item)
+        {
+            _itemRepo.SaveItem(item);
+        }
+
         private List<string> ImagesToList(ICollection<Image>? images)
         {
             var imageList = new List<string>();
@@ -63,5 +68,9 @@ namespace RzeczyDoOddania.Services
             return imageList;
         }
 
+        public Item GetItemNoRelations(int? id)
+        {
+            return _itemRepo.GetItemNoRelations(id);
+        }
     }
 }
