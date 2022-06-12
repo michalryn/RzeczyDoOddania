@@ -39,6 +39,9 @@ body {
     margin-top: 50px;
     display: flex;
 }
+#wrapper{
+    display: flex;
+}
 
 .card {
     transition: transform 0.15s ease-in, transform 0.2s ease-out;
@@ -81,5 +84,9 @@ body {
         color: #fff !important;
         background-color: #68a675 !important;
     }
+
+.carousel {
+    width: 50% !important;
+}
 
 
