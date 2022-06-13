@@ -76,10 +76,13 @@ namespace RzeczyDoOddania.Pages
                 Item.Completed = false;
                 Item.Owner = await _userManager.GetUserAsync(User);
                 _registerItem.RegisterItem(Item);
+
+                return RedirectToPage();
             }
 
-            var options = _registerItem.GetOptions();
+            /*var options = _registerItem.GetOptions();
             Options = new MultiSelectList(options, "Value", "Text");
+            return Page();*/
             return Page();
         }
     }

@@ -39,19 +39,37 @@ body {
     margin-top: 50px;
     display: flex;
 }
-#wrapper{
+#wrapper {
     display: flex;
+    height: 500px;
 }
-#content {
+#content-top {
+    position: absolute;
+    top: 0;
+}
+#content-bot {
     position: absolute;
     bottom: 0;
 }
-.text {
+.item-image{
     position: relative;
-    width: 520px;
-    margin-left: 20px;
+    width: 50%;
+    height: 100%;
 }
+.item-content {
+    position: relative;
+    width: 40%;
+    height: 100%;
+    padding-left: 10px;
 }
+
+.item-buttons{
+    position: relative;
+    width: min-content;
+    margin: 0 !important;
+
+}
+
 .card {
     transition: transform 0.15s ease-in, transform 0.2s ease-out;
 }
@@ -95,12 +113,9 @@ body {
     }
 
 .carousel {
-    width: 50% !important;
+    width: 100% !important;
 }
-.imga{
-    height: 50%;
-    width: 50%;
-}
+
 .content {
     width: 100%;
     height: auto;

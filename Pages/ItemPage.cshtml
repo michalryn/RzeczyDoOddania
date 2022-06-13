@@ -6,109 +6,122 @@
 @{
     ViewData["Title"] = "Strona przedmiotu";
     int i = 0;
-}<head>
+}
+<head>
     <script src="https://kit.fontawesome.com/a26751704a.js" crossorigin="anonymous"></script>
 </head>
 
-<div id="wrapper">    
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel"> 
-        <div class="carousel-inner">     
-            @foreach(var image in Model.Item.Images)           
-            {               
-                i++;
-                var active = i == 1 ? "active" : "";
-                <div class="carousel-item @active">
-                    <img src="@image" class="d-block w-100 imga" alt="...">
-                </div>
-            }          
-        </div> 
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">   
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>    
-            <span class="visually-hidden">Previous</span> 
-        </button>  
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">   
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>    
-            <span class="visually-hidden">Next</span>  
-        </button>
+<div id="wrapper">
+    <div class="item-image">
+        <div id="carouselExampleDark" class="carousel carousel-dark slide position-absolute" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach (var image in Model.Item.Images)
+                {
+                    i++;
+                    var active = i == 1 ? "active" : "";
+                    <div class="carousel-item @active">
+                        <img src="@image" class="d-block" style="width:auto" alt="...">
+                    </div>
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampledark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
     </div>
-    <div class="text">
-        <font size="+5"><b>@Model.Item.Name</b></font>
-        <br />
-        Kategorie:
-        @foreach(var category in Model.Item.Categories)   
-        {      
-            <span class="badge rounded-pill bg-warning">@category.Name</span> 
-        }   
-        <br />
-        @Model.Item.Description   
-        <div id="content">
-            Adres odbioru: @Model.Item.Address   
+    <div class="item-content">
+        <div id="content-top">
+            <font size="+5"><b>@Model.Item.Name</b></font>
+            <br />
+            Kategorie:
+            @foreach (var category in Model.Item.Categories)
+            {
+                <span class="badge rounded-pill bg-warning">@category.Name</span>
+            }
+            <br />
+            <br />
+            Opis:
+            <br />
+            @Model.Item.Description
+        </div>
+        <div id="content-bot">
+            Adres odbioru: @Model.Item.Address
             <br />
             Data wygaśnięcia: @Model.Item.Date
         </div>
-        
     </div>
-
 @if (_signInManager.IsSignedIn(User) && Model.Item.Owner != await _userManager.GetUserAsync(User))
 {
     @if (!Model.IsInterested)
     {
-        <form method="post">
-            <input type="hidden" asp-for="IsInterested" value="true" />
-            <button type="submit" asp-page-handler="Interest" class="btn btn-primary"><i class="fa-solid fa-heart-circle-plus"></i></button>
-        </form>
+        <div class="item-buttons">
+            <form method="post">
+                <input type="hidden" asp-for="IsInterested" value="true" />
+                <button type="submit" asp-page-handler="Interest" class="btn btn-primary"><i class="fa-solid fa-heart-circle-plus"></i></button>
+            </form>
+        </div>
     }
     else
     {
+        <div class="item-buttons">
         <form method="post">
             <input type="hidden" asp-for="IsInterested" value="false" />
             <button type="submit" asp-page-handler="Interest" class="btn btn-outline-danger"><i class="fa-solid fa-heart-circle-minus"></i></button>
         </form>
+        </div>
     }
 }
 @if (_signInManager.IsSignedIn(User) && Model.Item.Owner == await _userManager.GetUserAsync(User))
 {
     <div class="mb-3">
-        <div class="button-div">       
-            <a href="#popup" class="button">         
-                <button class="btn btn-primary">Zainteresowani</button>      
-            </a>     
-        </div>       
-        <div class="content" id="popup">   
+        <div class="button-div">
+            <a href="#popup" class="button">
+                <button class="btn btn-primary">Zainteresowani</button>
+            </a>
+        </div>
+        <div class="content" id="popup">
             <div class="toright">
-                <a href="#"><button class="btn btn-outline-danger"><i class="fa-solid fa-xmark"></i></button></a>            
+                <a href="#"><button class="btn btn-outline-danger"><i class="fa-solid fa-xmark"></i></button></a>
             </div>
-               
-            <br>       
-            <p><table>          
-                <tbody>              
-                    @if (Model.Item.InterestedUsers != null)                
-                    @foreach (var user in Model.Item.InterestedUsers)                  
-                    {                    
-                        <tr>                      
-                            <td>@user.Email</td>
-                            <td>
-                                @if (Model.Item.ReservedFor == null)
-                                {
-                                    <form method="post">
-                                        <input type="hidden" asp-for="ReservedFor" value="@user.Email"/>
-                                        <button type="submit" asp-page-handler="ConfirmReservation" class="btn btn-primary">Zarezerwuj</button>
-                                    </form>
 
-                                }
-                                else if(Model.Item.ReservedFor == user.Email)
-                                {
-                                    <form method="post">
-                                        <input type="hidden" asp-for="ReservedFor" value="@user.Email"/>
-                                        <button type="submit" asp-page-handler="CancelReservation" class="btn btn-outline-danger">Anuluj rezerwację</button>
-                                    </form>
-                                }
-                            </td>                       
-                        </tr>
-                    }
-            </tbody>        
-        </table></p>     
-    </div>
-        
+            <br>
+            <p>
+                <table>
+                    <tbody>
+                        @if (Model.Item.InterestedUsers != null)
+                            @foreach (var user in Model.Item.InterestedUsers)
+                            {
+                                <tr>
+                                    <td>@user.Email</td>
+                                    <td>
+                                        @if (Model.Item.ReservedFor == null)
+                                        {
+                                            <form method="post">
+                                                <input type="hidden" asp-for="ReservedFor" value="@user.Email" />
+                                                <button type="submit" asp-page-handler="ConfirmReservation" class="btn btn-primary">Zarezerwuj</button>
+                                            </form>
+
+                                        }
+                                        else if (Model.Item.ReservedFor == user.Email)
+                                        {
+                                            <form method="post">
+                                                <input type="hidden" asp-for="ReservedFor" value="@user.Email" />
+                                                <button type="submit" asp-page-handler="CancelReservation" class="btn btn-outline-danger">Anuluj rezerwację</button>
+                                            </form>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                    </tbody>
+                </table>
+            </p>
+        </div>
+
     </div>
 }
+</div>
